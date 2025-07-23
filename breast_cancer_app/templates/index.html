@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Breast Cancer Prediction</title>
+<style>
+   body {
+    font-family: Arial, sans-serif;
+    background: url('{{ url_for('static', filename='bg.jpg') }}') no-repeat center center fixed;
+    background-size: cover;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+}
+    .container {
+        background: rgba(255,255,255,0.9);
+        padding: 30px 40px;
+        border-radius: 12px;
+        box-shadow: 0px 4px 20px rgba(0,0,0,0.2);
+        width: 500px;
+    }
+    h2 {
+        text-align: center;
+        color: #d6336c;
+        margin-bottom: 20px;
+    }
+    label {
+        font-weight: bold;
+        display: block;
+        margin: 8px 0 4px;
+        color: #333;
+    }
+    input {
+        width: 100%;
+        padding: 8px;
+        border-radius: 6px;
+        border: 1px solid #ccc;
+        margin-bottom: 12px;
+        font-size: 14px;
+    }
+    input:focus {
+        border-color: #d6336c;
+        outline: none;
+        box-shadow: 0 0 5px rgba(214,51,108,0.5);
+    }
+    button {
+        width: 100%;
+        padding: 12px;
+        background: #d6336c;
+        border: none;
+        color: #fff;
+        font-size: 16px;
+        border-radius: 6px;
+        cursor: pointer;
+        margin-top: 10px;
+    }
+    button:hover {
+        background: #a12b57;
+    }
+    .result {
+        text-align: center;
+        margin-top: 20px;
+        font-size: 18px;
+        font-weight: bold;
+        color: #222;
+    }
+</style>
+</head>
+<body>
+<div class="container">
+<h2>Breast Cancer Prediction</h2>
+<form action="/predict" method="post">
+    {% set features = [
+        "mean radius","mean texture","mean perimeter","mean area","mean smoothness",
+        "mean compactness","mean concavity","mean concave points","mean symmetry","mean fractal dimension",
+        "radius error","texture error","perimeter error","area error","smoothness error",
+        "compactness error","concavity error","concave points error","symmetry error","fractal dimension error",
+        "worst radius","worst texture","worst perimeter","worst area","worst smoothness",
+        "worst compactness","worst concavity","worst concave points","worst symmetry","worst fractal dimension"
+    ] %}
+    {% for feature in features %}
+    <label>{{ feature }}</label>
+    <input type="text" name="{{loop.index0}}" placeholder="Enter {{ feature }}">
+    {% endfor %}
+    <button type="submit">Predict</button>
+</form>
+<div class="result">{{ prediction_text }}</div>
+</div>
+</body>
+</html>
